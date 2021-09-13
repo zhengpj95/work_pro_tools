@@ -1,0 +1,6 @@
+imgType: jpg
+maxSize: 512
+root: D:\assets\ui_jpg
+filterDir: [anim, ui_effect]
+e: !!int 123
+f: !!int 123a

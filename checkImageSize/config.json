@@ -1,0 +1,9 @@
+{
+	"imgType": "jpg",
+	"maxSize": "200",
+	"root": "D:\\assets\\ui_jpg",
+	"filterDir": [
+		"anim",
+		"ui_effect"
+	]
+}

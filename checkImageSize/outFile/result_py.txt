@@ -1,0 +1,14 @@
+D:\project\y3\assets\ui_jpg\ch_wish_di.jpg
+D:\project\y3\assets\ui_jpg\diwang_map.jpg
+D:\project\y3\assets\ui_jpg\forgingGod_privilege_bg.jpg
+D:\project\y3\assets\ui_jpg\god_bless_bg.jpg
+D:\project\y3\assets\ui_jpg\huakuibang_bg_40.jpg
+D:\project\y3\assets\ui_jpg\lchl_bg.jpg
+D:\project\y3\assets\ui_jpg\sanqing_map.jpg
+D:\project\y3\assets\ui_jpg\sanqing_map_2.jpg
+D:\project\y3\assets\ui_jpg\school_map.jpg
+D:\project\y3\assets\ui_jpg\theocracy_way_bg.jpg
+D:\project\y3\assets\ui_jpg\xiuxianfudi4.jpg
+D:\project\y3\assets\ui_jpg\xiuxianfudi5.jpg
+D:\project\y3\assets\ui_jpg\xiuxianfudi7.jpg
+D:\project\y3\assets\ui_jpg\yy_spirit_bg1.jpg
