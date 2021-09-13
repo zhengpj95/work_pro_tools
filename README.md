@@ -6,4 +6,6 @@
 
 ## 工具
 
-CheckImageSize: 检查图片资源大小是否超过给定值
+checkImageSize: 检查图片资源大小是否超过给定值
+
+splitEffectJson: 把特效的合图资源分解成多个单一的资源
