@@ -9,3 +9,5 @@
 checkImageSize: 检查图片资源大小是否超过给定值
 
 splitEffectJson: 把特效的合图资源分解成多个单一的资源
+
+slice_scene_map: 切分场景地图，便于加载渲染
