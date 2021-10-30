@@ -1,7 +1,5 @@
 class SceneMap extends egret.Sprite {
 
-	public mapId = 0;
-	public mapData: IMapData = null;
 	public bmpMap = {};
 
 	constructor() {
@@ -9,13 +7,8 @@ class SceneMap extends egret.Sprite {
 		this.touchEnabled = true;
 	}
 
-	initMap(id: number, data: IMapData): void {
-		this.mapId = id;
-		this.mapData = data;
-	}
-
 	updateBmp(): void {
-		let data = this.mapData;
+		let data = MapProxy.ins().mapData;
 		if (!data) {
 			return;
 		}
@@ -28,7 +21,7 @@ class SceneMap extends egret.Sprite {
 		for (let i = 0; i < rows; i++) {
 			for (let j = 0; j < cols; j++) {
 				let cell = new MapBmp();
-				cell.setIdx(i, j, this.mapId);
+				cell.setIdx(i, j, MapProxy.ins().mapId);
 				cell.width = data.sliceWidth * this.getSceenScaleX();
 				cell.height = data.sliceHeight * this.getSceenScaleY();
 				cell.x = initX + j * (data.sliceHeight * this.getSceenScaleX());
@@ -40,11 +33,11 @@ class SceneMap extends egret.Sprite {
 	}
 
 	private getMapWidth() {
-		return this.mapData.width;
+		return MapProxy.ins().mapData.width;
 	}
 
 	private getMapHeigh() {
-		return this.mapData.height;
+		return MapProxy.ins().mapData.height;
 	}
 
 	private getStageWidth() {
@@ -57,10 +50,10 @@ class SceneMap extends egret.Sprite {
 
 
 	public getSceenScaleX(): number {
-		return this.getStageWidth() / this.getMapWidth();
+		return 1;//this.getStageWidth() / this.getMapWidth();
 	}
 
 	public getSceenScaleY(): number {
-		return this.getStageHeigh() / this.getMapHeigh();
+		return 1;//this.getStageHeigh() / this.getMapHeigh();
 	}
 }

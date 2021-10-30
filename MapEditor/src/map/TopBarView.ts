@@ -30,6 +30,7 @@ class TopBarView extends BaseView {
 	switchToggle() {
 		let type = this.BtnSwitch.selected;
 		this.lbRect.fillColor = type ? 0xff0000 : 0xffffff;
+		this.dispatchEventWith('OnSwitchToggle', true, type, true);
 	}
 
 
