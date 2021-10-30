@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="skins.TopBarSkin"
+	height="200" xmlns:e="http://ns.egret.com/eui">
+	<e:Rect left="0" right="0" top="0" bottom="0"/>
+	<e:Label id="lbName" text="地图名字" x="38" y="41"/>
+	<e:ToggleSwitch id="BtnSwitch" label="ToggleButton" x="232.401" y="41.568"/>
+	<e:Rect id="lbRect" width="30" height="30" x="342.895" y="41.642" fillColor="0xFF0000"/>
+	<e:Label text="红色表示障碍点" x="338.179" y="79.279" size="18"/>
+	<e:HSlider id="hSlider" width="200" height="20" x="20" y="136"/>
+	<e:Label id="lbHSlider" x="23" y="108" size="22"/>
+</e:Skin>
