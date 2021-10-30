@@ -26,7 +26,7 @@ class SceneMask extends egret.Sprite {
 				let color = isBlock ? 0xff0000 : 0xffffff;
 				let alpha = isBlock ? 0.5 : 0;
 				this.graphics.beginFill(color, alpha);
-				this.graphics.drawRect(initX + i * (data.cellWidth * this.getSceenScaleX()), initY + j * (data.cellHeight * this.getSceenScaleY()), data.cellWidth * this.getSceenScaleX(), data.cellHeight * this.getSceenScaleY());
+				this.graphics.drawRect(initX + j * data.cellWidth + 1, initY + i * data.cellHeight + 1, data.cellWidth * this.getSceenScaleX() - 2, data.cellHeight * this.getSceenScaleY() - 2);
 			}
 		}
 	}

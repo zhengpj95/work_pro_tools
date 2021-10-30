@@ -4,7 +4,7 @@ class MapWin extends eui.UILayer {
 	private ins: MapProxy;
 	private sceneMap: SceneMap;
 	private sceneMask: SceneMask;
-	private toggleStatu = false;//true表示障碍
+	private toggleStatu = true;//true表示障碍
 
 	constructor() {
 		super();
@@ -23,7 +23,7 @@ class MapWin extends eui.UILayer {
 		this.addEventListener(egret.Event.ADDED_TO_STAGE, this.startToLoadMap, this);
 		this.addEventListener('OnHSliderChange', this.onHSliderChange, this);
 		this.addEventListener('OnSwitchToggle', this.onSwitchToggle, this);
-		// this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onClickCell, this);
+		this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onClickCell, this);
 
 
 		this.sceneMap = new SceneMap();
@@ -82,10 +82,11 @@ class MapWin extends eui.UILayer {
 		}
 		let realPoint = this.getRealPoint(e.stageX, e.stageY);
 		let mapData = this.ins.mapData;
-		let row = Math.floor(realPoint.x / (mapData.cellHeight * this.sceneMask.getSceenScaleX()));
-		let col = Math.floor(realPoint.y / (mapData.cellWidth * this.sceneMask.getSceenScaleY()));
+		let row = Math.floor(realPoint.y / (mapData.cellHeight * this.sceneMask.scaleY));
+		let col = Math.floor(realPoint.x / (mapData.cellWidth * this.sceneMask.scaleX));
 
-		this.ins.mapData.blocks[row][col] = this.toggleStatu ? 1 : 0;
+		console.log(`row = ${row}, col = ${col}, ${this.toggleStatu ? '障碍点' : '行进点'}`);
+		this.ins.mapData.blocks[row][col] = this.toggleStatu ? 0 : 1;
 		this.sceneMask.updateMask();
 	}
 
@@ -104,7 +105,7 @@ class MapWin extends eui.UILayer {
 	getRealPoint(stageX: number, stageY: number): egret.Point {
 		let point = new egret.Point();
 		point.x = stageX - 10;
-		point.y = stageY - 110;
+		point.y = stageY - 210;
 		return point;
 	}
 
