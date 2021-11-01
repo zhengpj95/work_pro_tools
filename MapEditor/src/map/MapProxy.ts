@@ -1,10 +1,13 @@
-class MapProxy extends SingletonClass {
+class MapProxy extends BaseProxy {
 	public mapId: number = 10020;
 	public mapData: IMapData = null;
 	public mapUrl: string = '';
 
 	public static ins: () => MapProxy;
 
+	public saveBlocksData(): void {
+		this.send(this.mapData);
+	}
 }
 
 class MapData {

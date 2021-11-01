@@ -5,6 +5,7 @@ class MapWin extends eui.UILayer {
 	private sceneMap: SceneMap;
 	private sceneMask: SceneMask;
 	private toggleState = true;//true表示障碍
+	private topBarView: TopBarView;
 
 	constructor() {
 		super();
@@ -17,12 +18,14 @@ class MapWin extends eui.UILayer {
 		rect.visible = true;
 		this.rect = rect;
 		this.addChild(rect);
-		this.addChild(new TopBarView());
+		this.topBarView = new TopBarView();
+		this.addChild(this.topBarView);
 
 		this.ins = MapProxy.ins();
 		this.addEventListener(egret.Event.ADDED_TO_STAGE, this.startToLoadMap, this);
 		this.addEventListener('OnHSliderChange', this.onHSliderChange, this);
 		this.addEventListener('OnSwitchToggle', this.onSwitchToggle, this);
+		this.addEventListener('OnMapSave', this.onMapSave, this);
 
 		this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
 		this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
@@ -64,6 +67,8 @@ class MapWin extends eui.UILayer {
 		this.sceneMap.updateBmp();
 
 		this.sceneMask.updateMask();
+
+		this.topBarView.loadMapSuccess();
 	}
 
 	private onHSliderChange(e: egret.Event): void {
@@ -75,6 +80,10 @@ class MapWin extends eui.UILayer {
 
 	private onSwitchToggle(e: egret.Event): void {
 		this.toggleState = !!e.data;
+	}
+
+	private onMapSave(): void {
+		this.ins.saveBlocksData();
 	}
 
 	private updateCellStatue(stageX: number, stageY: number): void {

@@ -23,6 +23,9 @@
 		},
 		{
 			"name": "game"
+		},
+		{
+			"name": "socket"
 		}
 	],
 	"eui": {
