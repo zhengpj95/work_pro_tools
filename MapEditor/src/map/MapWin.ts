@@ -4,7 +4,7 @@ class MapWin extends eui.UILayer {
 	private ins: MapProxy;
 	private sceneMap: SceneMap;
 	private sceneMask: SceneMask;
-	private toggleStatu = true;//true表示障碍
+	private toggleState = true;//true表示障碍
 
 	constructor() {
 		super();
@@ -23,7 +23,9 @@ class MapWin extends eui.UILayer {
 		this.addEventListener(egret.Event.ADDED_TO_STAGE, this.startToLoadMap, this);
 		this.addEventListener('OnHSliderChange', this.onHSliderChange, this);
 		this.addEventListener('OnSwitchToggle', this.onSwitchToggle, this);
-		this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onClickCell, this);
+
+		this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+		this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
 
 
 		this.sceneMap = new SceneMap();
@@ -72,21 +74,30 @@ class MapWin extends eui.UILayer {
 	}
 
 	private onSwitchToggle(e: egret.Event): void {
-		this.toggleStatu = !!e.data;
+		this.toggleState = !!e.data;
 	}
 
-	private onClickCell(e: egret.TouchEvent): void {
-		if (!this.checkPointInMap(e.stageX, e.stageY)) {
+	private updateCellStatue(stageX: number, stageY: number): void {
+		if (!this.checkPointInMap(stageX, stageY)) {
 			console.log(`点击处不在地图范围内`);
 			return;
 		}
-		let realPoint = this.getRealPoint(e.stageX, e.stageY);
+
+		let realPoint = this.getRealPoint(stageX, stageY);
 		let mapData = this.ins.mapData;
 		let row = Math.floor(realPoint.y / (mapData.cellHeight * this.sceneMask.scaleY));
 		let col = Math.floor(realPoint.x / (mapData.cellWidth * this.sceneMask.scaleX));
 
-		console.log(`row = ${row}, col = ${col}, ${this.toggleStatu ? '障碍点' : '行进点'}`);
-		this.ins.mapData.blocks[row][col] = this.toggleStatu ? 0 : 1;
+
+		let cellState = this.toggleState ? 0 : 1;
+		let blocks = this.ins.mapData.blocks;
+		if (blocks[row] == null || blocks[row][col] == null || blocks[row][col] == cellState) {
+			return;
+		}
+
+		console.log(`row = ${row}, col = ${col}, ${this.toggleState ? '障碍点' : '行进点'}`);
+
+		blocks[row][col] = cellState;
 		this.sceneMask.updateMask();
 	}
 
@@ -107,6 +118,21 @@ class MapWin extends eui.UILayer {
 		point.x = stageX - 10;
 		point.y = stageY - 210;
 		return point;
+	}
+
+	onTouchBegin(e: egret.TouchEvent): void {
+		console.log(`---onTouchBegin---`);
+		this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+	}
+
+	onTouchMove(e: egret.TouchEvent): void {
+		console.log(`onTouchMove --- ${e.stageX} - ${e.stageY}`);
+		this.updateCellStatue(e.stageX, e.stageY);
+	}
+
+	onTouchEnd(e: egret.TouchEvent): void {
+		console.log(`---onTouchEnd---`);
+		this.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
 	}
 
 }
