@@ -8,7 +8,7 @@ let eachHeight = 256;
 let cellWidth = 32;
 let cellHeight = 32;
 
-let imgData = images(path.join(__dirname, '..', 'resources', `${mapId}.jpg`));
+let imgData = images(path.join(__dirname, '..', 'resource', `${mapId}.jpg`));
 let outputRoot = path.join(__dirname, '..', 'output', `${mapId}`);
 
 if (!fs.existsSync(outputRoot)) {
@@ -16,7 +16,7 @@ if (!fs.existsSync(outputRoot)) {
 }
 
 let obj = {};
-obj.path = path.normalize(path.join('resources', `${mapId}`));
+obj.path = path.normalize(path.join('resource', 'map', `${mapId}`));
 obj.width = imgData.width();
 obj.height = imgData.height();
 obj.sliceWidth = eachWidth;
