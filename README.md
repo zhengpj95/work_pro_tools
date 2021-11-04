@@ -18,4 +18,4 @@ MapEditor: 地图编辑器，编辑哪些区域可行走，哪些区域是障碍
 
 基于proto3服务端（todo）
 
-游戏资源json一键生成工具（todo）
+generateResJson: 一键生成 default.res.json 文件
