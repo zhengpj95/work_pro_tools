@@ -2,6 +2,7 @@ from os import name
 from openpyxl import load_workbook
 from openpyxl.worksheet import worksheet
 import json
+import str2list
 
 
 def readXlsxFile():
@@ -68,13 +69,21 @@ def getRealData(sheet: worksheet.Worksheet):
         for col in range(0, len(rowData)):
             struct = dataStruct[col]
             dict1 = dict[rowData[0]]
-            dict1[struct['name']] = rowData[col]
+            if 'C' not in struct['CS']:
+                continue
+            # 处理数组
+            if struct['type'] == 'array':
+                dict1[struct['name']] = str2list.strToList(rowData[col])
+            else:
+                dict1[struct['name']] = rowData[col]
+
     print(json.dumps(dict, indent=2, ensure_ascii=False))
 
     nameList = getNameList(sheet)
     if not nameList['clientName']:
         print('xlsx客户端配置名为空')
         return
+
     with open(nameList['clientName'], "w", encoding='utf-8') as outfile:
         json.dump(dict, outfile, indent=2, ensure_ascii=False)
         # outfile.write(json.dumps(dict, indent=4, ensure_ascii=True))
