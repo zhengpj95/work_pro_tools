@@ -77,7 +77,7 @@ def getRealData(sheet: worksheet.Worksheet):
             else:
                 dict1[struct['name']] = rowData[col]
 
-    print(json.dumps(dict, indent=2, ensure_ascii=False))
+    # print(json.dumps(dict, indent=2, ensure_ascii=False))
 
     nameList = getNameList(sheet)
     if not nameList['clientName']:

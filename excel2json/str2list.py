@@ -50,20 +50,24 @@ def strToList(lab: str):
 
 def dealNumberList(array):
     result = []
-    for i in array:
-        if type(i).__name__ == 'list':
-            res = dealNumberList(i)
+    for item in array:
+        print(item)
+        if type(item).__name__ == 'list':
+            res = dealNumberList(item)
             result.append(res)
         else:
-            if is_number(i):
-                if i.find('.') > -1:
-                    i = float(i)
+            if is_number(item):
+                if item.find('.') > -1:
+                    item = float(item)
                 else:
-                    i = int(i)
-            if i == '':
+                    item = int(item)
+            if item == '':
                 result.append(None)
             else:
-                result.append(i)
+                # 字符串类型的，如果前后有双引号或单引号，需要去掉
+                if type(item).__name__ == 'str' and ((item[0] == '"' and item[-1] == '"') or (item[0] == "'" and item[-1] == "'")):
+                    item = item[1:-1]
+                result.append(item)
     return result
 
 
