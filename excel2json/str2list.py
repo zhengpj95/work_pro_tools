@@ -51,7 +51,7 @@ def strToList(lab: str):
 def dealNumberList(array):
     result = []
     for item in array:
-        print(item)
+        # print(item)
         if type(item).__name__ == 'list':
             res = dealNumberList(item)
             result.append(res)

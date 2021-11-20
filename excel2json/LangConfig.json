@@ -62,12 +62,9 @@
     "name": 4,
     "value": "未激活",
     "value1": [
-      1,
-      2,
-      [
-        11,
-        25
-      ]
+      "海阔天空",
+      "鱼跃鸟飞",
+      "提升自我"
     ],
     "value2": "{name:'jim',age:22,work:[12,16,'ted','walk']}"
   },
@@ -75,12 +72,8 @@
     "name": 5,
     "value": "已激活",
     "value1": [
-      1,
-      2,
-      [
-        11,
-        26
-      ]
+      "Everything is Ok",
+      "Nothing is impossible"
     ],
     "value2": "{name:'jim',age:22,work:[12,17,'ted','walk']}"
   },

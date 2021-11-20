@@ -1,3 +1,4 @@
+import sys
 from os import name
 from openpyxl import load_workbook
 from openpyxl.worksheet import worksheet
@@ -100,4 +101,7 @@ def readSingleSheet(sheet: worksheet.Worksheet):
 
 
 """ start """
-readXlsxFile()
+
+if __name__ == '__main__':
+    print(sys.argv)
+    readXlsxFile()
