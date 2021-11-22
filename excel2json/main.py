@@ -1,14 +1,13 @@
 import sys
-from os import name
 from openpyxl import load_workbook
 from openpyxl.worksheet import worksheet
 import json
 import str2list
 
 
-def readXlsxFile():
+def readXlsxFile(xlsxUrl):
     """ 开始读取xlsx文件 """
-    wb = load_workbook(filename='./test.xlsx')
+    wb = load_workbook(filename=xlsxUrl)
     # print(wb.sheetnames)
     # print(wb.worksheets)
     for sheet in wb.worksheets:
@@ -20,7 +19,7 @@ def getNameList(sheet: worksheet.Worksheet):
     serverName = sheet.cell(row=1, column=2).value
     clientName = sheet.cell(row=1, column=5).value
     keyNum = sheet.cell(row=2, column=2).value
-    if (not (serverName and clientName)):
+    if (not (serverName or clientName)):
         return None
     # print(serverName, clientName, keyNum)
     return {'serverName': serverName, 'clientName': clientName, 'keyNum': keyNum}
@@ -56,11 +55,7 @@ def getDataStruct(sheet: worksheet.Worksheet):
 
 
 def getRealData(sheet: worksheet.Worksheet):
-    """ 
-    要导出的json数据
-    还未处理完
-    array, object类型还没有处理好
-    """
+    """ 处理要导出的真实表格数据（多个key的未处理 todo） """
     dataStruct = getDataStruct(sheet)
     maxRow = sheet.max_row
     dict = {}
@@ -72,7 +67,7 @@ def getRealData(sheet: worksheet.Worksheet):
             dict1 = dict[rowData[0]]
             if 'C' not in struct['CS']:
                 continue
-            # 处理数组
+            # 特殊处理array, object类型
             if struct['type'] == 'array':
                 dict1[struct['name']] = str2list.strToList(rowData[col])
             elif struct['type'] == 'object':
@@ -81,15 +76,19 @@ def getRealData(sheet: worksheet.Worksheet):
                 dict1[struct['name']] = rowData[col]
 
     # print(json.dumps(dict, indent=2, ensure_ascii=False))
+    dealJsonData(sheet, dict)
 
+
+def dealJsonData(sheet: worksheet.Worksheet, obj: dict):
+    """ 导出json数据 """
     nameList = getNameList(sheet)
     if not nameList['clientName']:
         print('xlsx客户端配置名为空')
         return
 
     with open(nameList['clientName'], "w", encoding='utf-8') as outfile:
-        json.dump(dict, outfile, indent=2, ensure_ascii=False)
-        # outfile.write(json.dumps(dict, indent=4, ensure_ascii=True))
+        json.dump(obj, outfile, indent=2, ensure_ascii=False)
+        # outfile.write(json.dumps(obj, indent=4, ensure_ascii=True))
 
 
 def readSingleSheet(sheet: worksheet.Worksheet):
@@ -106,4 +105,8 @@ def readSingleSheet(sheet: worksheet.Worksheet):
 
 if __name__ == '__main__':
     print(sys.argv)
-    readXlsxFile()
+    xlsxUrl = "./test.xlsx"
+    if sys.argv and len(sys.argv) > 1 and sys.argv[1]:
+        xlsxUrl = sys.argv[1]
+    print(xlsxUrl)
+    readXlsxFile(xlsxUrl)
