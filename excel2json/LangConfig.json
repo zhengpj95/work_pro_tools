@@ -27,7 +27,16 @@
       11,
       132
     ],
-    "value2": "{name:'jim',age:22,work:[12,13,'ted','walk']}"
+    "value2": {
+      "name": "jim",
+      "age": 22,
+      "work": [
+        12,
+        13,
+        "ted",
+        "walk"
+      ]
+    }
   },
   "2": {
     "name": 2,
@@ -37,7 +46,16 @@
       "中国",
       "china"
     ],
-    "value2": "{name:'jim',age:22,work:[12,14,'ted','walk']}"
+    "value2": {
+      "name": "jim",
+      "age": 22,
+      "work": [
+        12,
+        14,
+        "ted",
+        "walk"
+      ]
+    }
   },
   "3": {
     "name": 3,
@@ -56,7 +74,16 @@
         "世界之大"
       ]
     ],
-    "value2": "{name:'jim',age:22,work:[12,15,'ted','walk']}"
+    "value2": {
+      "name": "jim",
+      "age": 22,
+      "work": [
+        12,
+        15,
+        "ted",
+        "walk"
+      ]
+    }
   },
   "4": {
     "name": 4,
@@ -66,7 +93,16 @@
       "鱼跃鸟飞",
       "提升自我"
     ],
-    "value2": "{name:'jim',age:22,work:[12,16,'ted','walk']}"
+    "value2": {
+      "name": "jim",
+      "age": 22,
+      "work": [
+        12,
+        16,
+        "ted",
+        "walk"
+      ]
+    }
   },
   "5": {
     "name": 5,
@@ -75,7 +111,16 @@
       "Everything is Ok",
       "Nothing is impossible"
     ],
-    "value2": "{name:'jim',age:22,work:[12,17,'ted','walk']}"
+    "value2": {
+      "name": "jim",
+      "age": 22,
+      "work": [
+        12,
+        17,
+        "ted",
+        "walk"
+      ]
+    }
   },
   "6": {
     "name": 6,
@@ -88,7 +133,16 @@
         27
       ]
     ],
-    "value2": "{name:'jim',age:22,work:[12,18,'ted','walk']}"
+    "value2": {
+      "name": "jim",
+      "age": 22,
+      "work": [
+        12,
+        18,
+        "ted",
+        "walk"
+      ]
+    }
   },
   "7": {
     "name": 7,
@@ -101,7 +155,16 @@
         28
       ]
     ],
-    "value2": "{name:'jim',age:22,work:[12,19,'ted','walk']}"
+    "value2": {
+      "name": "jim",
+      "age": 22,
+      "work": [
+        12,
+        19,
+        "ted",
+        "walk"
+      ]
+    }
   },
   "8": {
     "name": 8,
@@ -114,7 +177,16 @@
         29
       ]
     ],
-    "value2": "{name:'jim',age:22,work:[12,20,'ted','walk']}"
+    "value2": {
+      "name": "jim",
+      "age": 22,
+      "work": [
+        12,
+        20,
+        "ted",
+        "walk"
+      ]
+    }
   },
   "9": {
     "name": 9,
@@ -127,7 +199,16 @@
         30
       ]
     ],
-    "value2": "{name:'jim',age:22,work:[12,21,'ted','walk']}"
+    "value2": {
+      "name": "jim",
+      "age": 22,
+      "work": [
+        12,
+        21,
+        "ted",
+        "walk"
+      ]
+    }
   },
   "10": {
     "name": 10,
@@ -140,6 +221,15 @@
         31
       ]
     ],
-    "value2": "{name:'jim',age:22,work:[12,22,'ted','walk']}"
+    "value2": {
+      "name": "jim",
+      "age": 22,
+      "work": [
+        12,
+        22,
+        "ted",
+        "walk"
+      ]
+    }
   }
 }

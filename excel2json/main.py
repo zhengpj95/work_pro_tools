@@ -75,6 +75,8 @@ def getRealData(sheet: worksheet.Worksheet):
             # 处理数组
             if struct['type'] == 'array':
                 dict1[struct['name']] = str2list.strToList(rowData[col])
+            elif struct['type'] == 'object':
+                dict1[struct['name']] = json.loads(rowData[col])
             else:
                 dict1[struct['name']] = rowData[col]
 
