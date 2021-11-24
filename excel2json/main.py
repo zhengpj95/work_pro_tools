@@ -56,13 +56,20 @@ def getDataStruct(sheet: worksheet.Worksheet):
 
 def getRealData(sheet: worksheet.Worksheet):
     """ 处理要导出的真实表格数据（多个key的未处理 todo） """
+    totalKey = getNameList(sheet)['keyNum']  # key数量
     dataStruct = getDataStruct(sheet)
     maxRow = sheet.max_row
     totalJson = {}
     for i in range(8, maxRow+1):
         rowData = getRowValue(sheet, i)
-        totalJson[rowData[0]] = {}
-        eachRowJson = totalJson[rowData[0]]
+
+        # 多个key处理
+        eachRowJson = totalJson
+        for key in range(0, totalKey):
+            if not eachRowJson.get(rowData[key]):
+                eachRowJson[rowData[key]] = {}
+            eachRowJson = eachRowJson.get(rowData[key])
+
         for col in range(0, len(rowData)):
             struct = dataStruct[col]
             if 'C' not in struct['CS']:
@@ -98,6 +105,7 @@ def readSingleSheet(sheet: worksheet.Worksheet):
         return
     # print(nameList)
     # print(sheet.max_row, sheet.max_column)
+    print('开始处理sheet：', sheet.title)
     getRealData(sheet)
 
 
