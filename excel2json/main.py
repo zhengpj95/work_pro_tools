@@ -62,9 +62,9 @@ def getRealData(sheet: worksheet.Worksheet):
     for i in range(8, maxRow+1):
         rowData = getRowValue(sheet, i)
         totalJson[rowData[0]] = {}
+        eachRowJson = totalJson[rowData[0]]
         for col in range(0, len(rowData)):
             struct = dataStruct[col]
-            eachRowJson = totalJson[rowData[0]]
             if 'C' not in struct['CS']:
                 continue
             # 特殊处理array, object类型
