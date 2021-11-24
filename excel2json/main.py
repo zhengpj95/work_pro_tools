@@ -58,25 +58,25 @@ def getRealData(sheet: worksheet.Worksheet):
     """ 处理要导出的真实表格数据（多个key的未处理 todo） """
     dataStruct = getDataStruct(sheet)
     maxRow = sheet.max_row
-    dict = {}
+    totalJson = {}
     for i in range(8, maxRow+1):
         rowData = getRowValue(sheet, i)
-        dict[rowData[0]] = {}
+        totalJson[rowData[0]] = {}
         for col in range(0, len(rowData)):
             struct = dataStruct[col]
-            dict1 = dict[rowData[0]]
+            eachRowJson = totalJson[rowData[0]]
             if 'C' not in struct['CS']:
                 continue
             # 特殊处理array, object类型
             if struct['type'] == 'array':
-                dict1[struct['name']] = str2list.strToList(rowData[col])
+                eachRowJson[struct['name']] = str2list.strToList(rowData[col])
             elif struct['type'] == 'object':
-                dict1[struct['name']] = json.loads(rowData[col])
+                eachRowJson[struct['name']] = json.loads(rowData[col])
             else:
-                dict1[struct['name']] = rowData[col]
+                eachRowJson[struct['name']] = rowData[col]
 
     # print(json.dumps(dict, indent=2, ensure_ascii=False))
-    dealJsonData(sheet, dict)
+    dealJsonData(sheet, totalJson)
 
 
 def dealJsonData(sheet: worksheet.Worksheet, obj: dict):
