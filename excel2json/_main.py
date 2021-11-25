@@ -140,6 +140,8 @@ class Excel2Json:
         totalJson = {}
         for row in range(self.startRow, maxRow+1):
             rowData = self.getRowValue(row)
+            if len(rowData) == 0 or rowData[0] == None:
+                break
 
             eachRowJson = totalJson
             for key in range(0, totalKey):
