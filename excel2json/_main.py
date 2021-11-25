@@ -44,8 +44,12 @@ class RowStruct:
 class Excel2Json:
 
     xlslUrl = ''
-    structRow = [4, 5, 6, 7]  # 配表信息定义的行数
-    startRow = 8  # 配表真实数据开始的行数
+    # 配表信息定义的行数
+    structRow = [4, 5, 6, 7]
+    # 配表真实数据要导出的列数，每行的后面可能有些说明，但是是不用导出，所以需要记录要导出的真实列数，也就是structRow行的真实列数
+    structColLen = 0
+    # 配表真实数据开始的行数
+    startRow = 8
     sheet: worksheet.Worksheet = None
 
     def __init__(self, xlsxUrl: str) -> None:
@@ -56,6 +60,9 @@ class Excel2Json:
         # print(wb.sheetnames)
         # print(wb.worksheets)
         for sheet in wb.worksheets:
+            # title中以#开头的表示不导出
+            if sheet.title[0] == '#':
+                continue
             self.sheet = sheet
             self.readSingleSheet()
         self.sheet = None
@@ -80,7 +87,8 @@ class Excel2Json:
         rowData = []
         for i in range(1, columns+1):
             cellValue = self.sheet.cell(row=row, column=i).value
-            if (not cellValue):
+            # 单元格填0是需要导出的
+            if cellValue == None:
                 break
             rowData.append(cellValue)
         return rowData
@@ -92,7 +100,8 @@ class Excel2Json:
         row6 = self.getRowValue(self.structRow[2])
         row7 = self.getRowValue(self.structRow[3])
         rowStruct = {}
-        for i in range(0, len(row4)):
+        self.structColLen = len(row5)
+        for i in range(0, len(row5)):
             struct = RowStruct()
             struct._name = row5[i]
             struct._type = row6[i]
@@ -111,8 +120,21 @@ class Excel2Json:
 
     def dealEachRowData(self):
         """ 读取每行配置，处理导出数据 """
-        totalKey = self.getSheetStruct().keyCount  # 表中配置的key数量
         rowStruct = self.getRowStruct()
+        if not rowStruct:
+            return
+
+        # 判断是否有客户端字段
+        haveClient = False
+        for idx in range(0, len(rowStruct)):
+            if 'C' in rowStruct[idx]._cs:
+                haveClient = True
+                break
+        if not haveClient:
+            print('\t\t不需要导出json')
+            return
+
+        totalKey = self.getSheetStruct().keyCount  # 表中配置的key数量
         maxRow = self.sheet.max_row
 
         totalJson = {}
@@ -125,7 +147,7 @@ class Excel2Json:
                     eachRowJson[rowData[key]] = {}
                 eachRowJson = eachRowJson.get(rowData[key])
 
-            for col in range(0, len(rowData)):
+            for col in range(0, self.structColLen):
                 colStruct: RowStruct = rowStruct[col]
                 if 'C' not in colStruct._cs:
                     continue
