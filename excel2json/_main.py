@@ -169,7 +169,7 @@ class Excel2Json:
             print('xlsx客户端配置名为空')
             return
 
-        with open(nameList.clientName, "w", encoding='utf-8') as outfile:
+        with open("output/"+nameList.clientName, "w", encoding='utf-8') as outfile:
             json.dump(obj, outfile, indent=2, ensure_ascii=False)
             # outfile.write(json.dumps(obj, indent=4, ensure_ascii=True))
 
