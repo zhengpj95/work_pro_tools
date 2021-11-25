@@ -1,3 +1,3 @@
 echo off
-python main.py %~1
+python _main.py %~1
 pause
