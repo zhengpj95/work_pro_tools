@@ -58,6 +58,8 @@ class Excel2Json:
         for sheet in wb.worksheets:
             self.sheet = sheet
             self.readSingleSheet()
+        self.sheet = None
+        self.xlslUrl = ''
 
     def getSheetStruct(self):
         """ 获取当个sheet导出文件的名称以及key数量 """
