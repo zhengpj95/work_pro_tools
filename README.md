@@ -14,7 +14,7 @@ slice_scene_map: 切分场景地图，便于加载渲染
 
 MapEditor: 地图编辑器，编辑哪些区域可行走，哪些区域是障碍点
 
-导表工具（todo）
+导表工具: excel2json，导出 json 文件
 
 基于proto3服务端（todo）
 
