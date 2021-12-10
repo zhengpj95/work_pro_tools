@@ -1,0 +1,51 @@
+{
+  "open_time": {
+    "key": "open_time",
+    "value": "2021_12_10"
+  },
+  "maxLevel": {
+    "key": "maxLevel",
+    "value": 999
+  },
+  "open_condition": {
+    "key": "open_condition",
+    "value": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "root": {
+    "key": "root",
+    "value": {
+      "name": "root",
+      "password": 123654,
+      "city": "gd"
+    }
+  },
+  "strArr": {
+    "key": "strArr",
+    "value": [
+      "海阔天空",
+      "鱼跃鸟飞",
+      "提升自我"
+    ]
+  },
+  "obj": {
+    "key": "obj",
+    "value": {
+      "name": "jim",
+      "age": 22,
+      "work": [
+        12,
+        13,
+        "ted",
+        "walk"
+      ]
+    }
+  }
+}

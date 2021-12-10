@@ -127,7 +127,36 @@ class Excel2Json:
             return
         # print(sheet.max_row, sheet.max_column)
         print('开始处理sheet:', self.sheet.title)
-        self.dealEachRowData()
+        if self.sheetStruct.spcialType:
+            self.dealSpecailReachRowData()
+        else:
+            self.dealEachRowData()
+
+    def dealSpecailReachRowData(self):
+        """ 处理特殊的导出格式，竖状 """
+        rowStruct = self.getRowStruct()
+        if not rowStruct:
+            return
+
+        totalJson = {}
+        for row in range(self.startRow, self.sheet.max_row + 1):
+            rowData: RowStruct = self.getRowValue(row)
+            if len(rowData) == 0 or rowData[0] == None or 'C' not in rowData[2]:
+                break
+
+            totalJson[rowData[0]] = eachRowJson = {}
+            col0: RowStruct = rowStruct[0]  # key
+            eachRowJson[col0._name] = rowData[0]
+            col3: RowStruct = rowStruct[3]  # value
+
+            if rowData[1] == 'array':
+                eachRowJson[col3._name] = str2list.strToList(rowData[3])
+            elif rowData[1] == 'object':
+                eachRowJson[col3._name] = json.loads(rowData[3])
+            else:
+                eachRowJson[col3._name] = rowData[3]
+
+        self.dealJsonData(totalJson)
 
     def dealEachRowData(self):
         """ 读取每行配置，处理导出数据 """
