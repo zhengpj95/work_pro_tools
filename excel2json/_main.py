@@ -61,7 +61,7 @@ class Excel2Json:
     def __init__(self, xlsxUrl: str) -> None:
         self.xlslUrl = xlsxUrl
 
-    def readFile(self):
+    def readFile(self) -> None:
         wb = load_workbook(filename=self.xlslUrl)
         # print(wb.sheetnames)
         # print(wb.worksheets)
@@ -77,7 +77,7 @@ class Excel2Json:
         self.xlslUrl = ''
         self.sheetStruct = None
 
-    def getSheetStruct(self):
+    def getSheetStruct(self) -> SheetStruct:
         """ 获取当个sheet导出文件的名称以及key数量 """
         serverName = self.sheet.cell(row=1, column=2).value
         clientName = self.sheet.cell(row=1, column=5).value
@@ -93,7 +93,7 @@ class Excel2Json:
         self.sheetStruct = struct
         return struct
 
-    def getRowValue(self, row: int):
+    def getRowValue(self, row: int) -> list:
         """ 获取某行的数据 """
         columns = self.sheet.max_column
         rowData = []
@@ -105,7 +105,7 @@ class Excel2Json:
             rowData.append(cellValue)
         return rowData
 
-    def getRowStruct(self):
+    def getRowStruct(self) -> dict:
         """ 导出数据的结构体信息 """
         row4 = self.getRowValue(self.structRow[0])
         row5 = self.getRowValue(self.structRow[1])
@@ -121,7 +121,7 @@ class Excel2Json:
             rowStruct[i] = struct
         return rowStruct
 
-    def dealSingleSheet(self):
+    def dealSingleSheet(self) -> None:
         """ 处理单张sheet """
         if (not self.sheetStruct):
             return
@@ -132,7 +132,7 @@ class Excel2Json:
         else:
             self.dealEachRowData()
 
-    def dealSpecailReachRowData(self):
+    def dealSpecailReachRowData(self) -> None:
         """ 处理特殊的导出格式，竖状 """
         rowStruct = self.getRowStruct()
         if not rowStruct:
@@ -158,7 +158,7 @@ class Excel2Json:
 
         self.dealJsonData(totalJson)
 
-    def dealEachRowData(self):
+    def dealEachRowData(self) -> None:
         """ 读取每行配置，处理导出数据 """
         rowStruct = self.getRowStruct()
         if not rowStruct:
@@ -202,7 +202,7 @@ class Excel2Json:
                     eachRowJson[colStruct._name] = rowData[col]
         self.dealJsonData(totalJson)
 
-    def dealJsonData(self, obj: dict):
+    def dealJsonData(self, obj: dict) -> None:
         """ 导出json数据 """
         nameList = self.sheetStruct
         if not nameList.clientName:
