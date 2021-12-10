@@ -72,7 +72,7 @@ class Excel2Json:
             self.sheet = sheet
             if (not self.getSheetStruct()):
                 continue
-            self.readSingleSheet()
+            self.dealSingleSheet()
         self.sheet = None
         self.xlslUrl = ''
         self.sheetStruct = None
@@ -121,7 +121,7 @@ class Excel2Json:
             rowStruct[i] = struct
         return rowStruct
 
-    def readSingleSheet(self):
+    def dealSingleSheet(self):
         """ 处理单张sheet """
         if (not self.sheetStruct):
             return
