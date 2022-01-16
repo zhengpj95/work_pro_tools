@@ -62,7 +62,7 @@ function dealRes(name, idx, frame) {
 	// console.log(idx, frame, res);
 	images(res.w, res.h)
 		.draw(images(pngSource, res.x, res.y, res.w, res.h), 0, 0)
-		.save(path.join(output, `${name}_${idx}_.png`));
+		.save(path.join(output, `${name}_${idx}.png`));
 }
 
 dealLabels();
