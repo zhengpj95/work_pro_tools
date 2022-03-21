@@ -29,8 +29,9 @@
 		"resource/eui_skins/ToggleSwitchSkin.exml",
 		"resource/eui_skins/VScrollBarSkin.exml",
 		"resource/eui_skins/VSliderSkin.exml",
-		"resource/skins/TopBarSkin.exml",
-		"resource/skins/ListViewSkin.exml"
+		"resource/skins/ListViewSkin.exml",
+		"resource/skins/MapItemSkin.exml",
+		"resource/skins/TopBarSkin.exml"
 	],
 	"path": "resource/default.thm.json"
 }
