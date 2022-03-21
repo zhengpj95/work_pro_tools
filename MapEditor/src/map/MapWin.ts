@@ -97,14 +97,14 @@ class MapWin extends eui.UILayer {
 		let row = Math.floor(realPoint.y / (mapData.cellHeight * this.sceneMask.scaleY));
 		let col = Math.floor(realPoint.x / (mapData.cellWidth * this.sceneMask.scaleX));
 
-		let brush = this.ins.brush || 1;//笔刷
+		let brush = this.ins.brush;//笔刷
 		let cellState = this.toggleState ? 0 : 1;
 		let blocks = this.ins.mapData.blocks;
 
 		for (let i = row - brush; i <= row + brush; i++) {
 			for (let j = col - brush; j <= col + brush; j++) {
 				if (blocks[i] == null || blocks[i][j] == null || blocks[i][j] == cellState) {
-					return;
+					continue;
 				}
 				blocks[i][j] = cellState;
 				this.sceneMask.updateMask();
