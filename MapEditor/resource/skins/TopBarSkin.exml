@@ -6,7 +6,13 @@
 	<e:ToggleSwitch id="BtnSwitch" label="ToggleButton" x="39" y="98"/>
 	<e:Rect id="lbRect" width="30" height="30" x="143" y="96" fillColor="0xFF0000"/>
 	<e:Label text="红色表示障碍点" x="44.284" y="132.637" size="18"/>
-	<e:HSlider id="hSlider" width="200" height="20" x="279.5" y="131"/>
-	<e:Label id="lbHSlider" x="288" y="106" size="22"/>
+	<e:Group x="279.5" y="73.528">
+		<e:Label id="lbScale" x="8.5" y="0" size="22"/>
+		<e:HSlider id="scaleSlider" width="200" height="20" x="0" y="25"/>
+	</e:Group>
+	<e:Group x="280.029" y="133.589">
+		<e:Label id="lbSize" x="8.5" y="0" size="22"/>
+		<e:HSlider id="sizeSlider" width="200" height="20" x="0" y="25"/>
+	</e:Group>
 	<e:Button id="btnSave" label="保 存" x="515" y="20"/>
 </e:Skin>

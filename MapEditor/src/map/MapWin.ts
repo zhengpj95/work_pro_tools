@@ -97,17 +97,19 @@ class MapWin extends eui.UILayer {
 		let row = Math.floor(realPoint.y / (mapData.cellHeight * this.sceneMask.scaleY));
 		let col = Math.floor(realPoint.x / (mapData.cellWidth * this.sceneMask.scaleX));
 
-
+		let brush = this.ins.brush || 1;//笔刷
 		let cellState = this.toggleState ? 0 : 1;
 		let blocks = this.ins.mapData.blocks;
-		if (blocks[row] == null || blocks[row][col] == null || blocks[row][col] == cellState) {
-			return;
+
+		for (let i = row - brush; i <= row + brush; i++) {
+			for (let j = col - brush; j <= col + brush; j++) {
+				if (blocks[i] == null || blocks[i][j] == null || blocks[i][j] == cellState) {
+					return;
+				}
+				blocks[i][j] = cellState;
+				this.sceneMask.updateMask();
+			}
 		}
-
-		console.log(`row = ${row}, col = ${col}, ${this.toggleState ? '障碍点' : '行进点'}`);
-
-		blocks[row][col] = cellState;
-		this.sceneMask.updateMask();
 	}
 
 

@@ -2,6 +2,7 @@ class MapProxy extends BaseProxy {
 	public mapId: number = 10020;
 	public mapData: IMapData = null;
 	public mapUrl: string = '';
+	public brush: number = 0;//笔刷
 
 	public static ins: () => MapProxy;
 

@@ -2,14 +2,18 @@ class TopBarView extends BaseView {
 	public lbName: eui.Label;
 	public BtnSwitch: eui.ToggleSwitch;
 	public lbRect: eui.Rect;
-	public hSlider: eui.HSlider;
-	public lbHSlider: eui.Label;
+	public lbScale: eui.Label;
+	public scaleSlider: eui.HSlider;
+	public lbSize: eui.Label;
+	public sizeSlider: eui.HSlider;
 	public btnSave: eui.Button;
+	private ins: MapProxy;
 
 	constructor() {
 		super();
 		this.skinName = 'skins.TopBarSkin';
 		this.percentWidth = 100;
+		this.ins = MapProxy.ins();
 	}
 
 	open() {
@@ -17,16 +21,22 @@ class TopBarView extends BaseView {
 		this.initHSlider();
 		this.BtnSwitch.selected = true;
 		this.lbRect.fillColor = 0xff0000;
-		this.addEvent(egret.Event.CHANGE, this.hSlider, this.onHSliderChange);
+		this.addEvent(egret.Event.CHANGE, this.scaleSlider, this.onHSliderChange);
+		this.addEvent(egret.Event.CHANGE, this.sizeSlider, this.onSizeSliderChange);
 		this.addEvent(egret.Event.CHANGE, this.BtnSwitch, this.switchToggle);
 		this.addEvent(egret.TouchEvent.TOUCH_TAP, this.btnSave, this.onMapSave);
 	}
 
 	initHSlider() {
-		this.hSlider.maximum = 100;
-		this.hSlider.value = 100;
-		this.hSlider.pendingValue = 100;
-		this.lbHSlider.text = `缩放：${Math.floor(this.hSlider.pendingValue)}%`;
+		this.scaleSlider.maximum = 100;
+		this.scaleSlider.value = 100;
+		this.scaleSlider.pendingValue = 100;
+		this.lbScale.text = `缩放：${Math.floor(this.scaleSlider.pendingValue)}%`;
+
+		this.sizeSlider.maximum = 4;
+		this.sizeSlider.value = 0;
+		this.sizeSlider.pendingValue = 0;
+		this.lbSize.text = `笔刷：${this.sizeSlider.pendingValue}`;
 	}
 
 	switchToggle() {
@@ -44,8 +54,14 @@ class TopBarView extends BaseView {
 	}
 
 	onHSliderChange() {
-		let val = Math.floor(this.hSlider.pendingValue);
-		this.lbHSlider.text = `缩放：${val}%`;
+		let val = Math.floor(this.scaleSlider.pendingValue);
+		this.lbScale.text = `缩放：${val}%`;
 		this.dispatchEventWith('OnHSliderChange', true, val, true);
+	}
+
+	private onSizeSliderChange() {
+		let val = Math.floor(this.sizeSlider.pendingValue);
+		this.lbSize.text = `笔刷：${val}`;
+		this.ins.brush = val;
 	}
 }
