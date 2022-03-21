@@ -26,7 +26,7 @@ class SceneMask extends egret.Sprite {
 				let color = isBlock ? 0xff0000 : 0xffffff;
 				let alpha = isBlock ? 0.5 : 0;
 				this.graphics.beginFill(color, alpha);
-				this.graphics.drawRect(initX + j * data.cellWidth + 1, initY + i * data.cellHeight + 1, data.cellWidth * this.getSceenScaleX() - 2, data.cellHeight * this.getSceenScaleY() - 2);
+				this.graphics.drawRect(initX + j * data.cellWidth + 1, initY + i * data.cellHeight + 1, data.cellWidth - 2, data.cellHeight - 2);
 			}
 		}
 	}
@@ -34,29 +34,5 @@ class SceneMask extends egret.Sprite {
 	getCellState(row: number, col: number) {
 		let blocks = MapProxy.ins().mapData.blocks;
 		return blocks[row][col];
-	}
-
-	private getMapWidth() {
-		return MapProxy.ins().mapData.width;
-	}
-
-	private getMapHeigh() {
-		return MapProxy.ins().mapData.height;
-	}
-
-	private getStageWidth() {
-		return this.stage.stageWidth;
-	}
-
-	private getStageHeigh() {
-		return this.stage.stageHeight;
-	}
-
-	public getSceenScaleX(): number {
-		return 1;//this.getStageWidth() / this.getMapWidth();
-	}
-
-	public getSceenScaleY(): number {
-		return 1;//this.getStageHeigh() / this.getMapHeigh();
 	}
 }

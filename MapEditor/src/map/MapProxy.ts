@@ -17,20 +17,12 @@ class MapData {
 	public cellWidth = 0;
 	public cellHeigh = 0;
 	public sliceWidth = 0;
-	public sliceHeigh = 0;
+	public sliceHeight = 0;
 	public blocks: number[] = [];
 	public path: string = '';
 
 	public rows: number = 0;
 	public cols: number = 0;
-
-	// public getRows(): number {
-	// 	return Math.ceil(this.heigh / this.sliceHeigh);
-	// }
-
-	// public getCols(): number {
-	// 	return Math.ceil(this.width / this.sliceWidth);
-	// }
 }
 
 interface IMapData {
