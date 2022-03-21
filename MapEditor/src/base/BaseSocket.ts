@@ -2,7 +2,7 @@ class BaseSocket extends SingletonClass {
 
 	public ws: egret.WebSocket;
 	public static Host = "127.0.0.1";
-	public static Port = 8081;
+	public static Port = 8082;
 
 	constructor() {
 		super();
