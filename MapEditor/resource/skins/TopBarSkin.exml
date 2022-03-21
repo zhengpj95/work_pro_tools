@@ -17,4 +17,5 @@
 		<e:Label id="lbSize" x="8.5" y="0" size="22"/>
 		<e:HSlider id="sizeSlider" width="200" height="20" x="0" y="25"/>
 	</e:Group>
+	<e:CheckBox id="showMask" label="显示网格" x="397" y="96"/>
 </e:Skin>

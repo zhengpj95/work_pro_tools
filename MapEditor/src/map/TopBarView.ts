@@ -7,6 +7,7 @@ class TopBarView extends BaseView {
 	public lbSize: eui.Label;
 	public sizeSlider: eui.HSlider;
 	public btnSave: eui.Button;
+	public showMask: eui.CheckBox;
 	private ins: MapProxy;
 
 	constructor() {
@@ -19,12 +20,14 @@ class TopBarView extends BaseView {
 	open() {
 		super.open();
 		this.initHSlider();
+		this.showMask.selected = true;
 		this.BtnSwitch.selected = true;
 		this.lbRect.fillColor = 0xff0000;
 		this.addEvent(egret.Event.CHANGE, this.scaleSlider, this.onHSliderChange);
 		this.addEvent(egret.Event.CHANGE, this.sizeSlider, this.onSizeSliderChange);
 		this.addEvent(egret.Event.CHANGE, this.BtnSwitch, this.switchToggle);
 		this.addEvent(egret.TouchEvent.TOUCH_TAP, this.btnSave, this.onMapSave);
+		this.addEvent(egret.TouchEvent.TOUCH_TAP, this.showMask, this.onClickCheckBox);
 	}
 
 	initHSlider() {
@@ -63,5 +66,9 @@ class TopBarView extends BaseView {
 		let val = Math.floor(this.sizeSlider.pendingValue);
 		this.lbSize.text = `笔刷：${val}`;
 		this.ins.brush = val;
+	}
+
+	private onClickCheckBox(): void {
+		this.dispatchEventWith('onClickCheckBox', true, this.showMask.selected, true);
 	}
 }

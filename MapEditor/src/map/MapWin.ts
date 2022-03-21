@@ -26,10 +26,9 @@ class MapWin extends eui.UILayer {
 		this.addEventListener('OnHSliderChange', this.onHSliderChange, this);
 		this.addEventListener('OnSwitchToggle', this.onSwitchToggle, this);
 		this.addEventListener('OnMapSave', this.onMapSave, this);
+		this.addEventListener('onClickCheckBox', this.onShowMask, this);
 
 		this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-		this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
-
 
 		this.sceneMap = new SceneMap();
 		this.sceneMap.y = 140;
@@ -86,6 +85,10 @@ class MapWin extends eui.UILayer {
 		this.ins.saveBlocksData();
 	}
 
+	private onShowMask(e: egret.Event): void {
+		this.sceneMask.visible = !!e.data;
+	}
+
 	private updateCellStatue(stageX: number, stageY: number): void {
 		if (!this.checkPointInMap(stageX, stageY)) {
 			console.log(`点击处不在地图范围内`);
@@ -137,6 +140,7 @@ class MapWin extends eui.UILayer {
 		}
 		console.log(`---onTouchBegin---`);
 		this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+		this.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
 	}
 
 	onTouchMove(e: egret.TouchEvent): void {
@@ -147,6 +151,7 @@ class MapWin extends eui.UILayer {
 	onTouchEnd(e: egret.TouchEvent): void {
 		console.log(`---onTouchEnd---`);
 		this.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+		this.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
 	}
 
 }
