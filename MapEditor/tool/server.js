@@ -18,6 +18,16 @@ wss.on("connection", (ws) => {
 			// console.log(data['path']);
 			writeMapJson(data);
 		}
+
+		if (data && data["msgId"] && data["msgId"] == 1001) {
+			let list = getMapList();
+			let _d = {
+				msgId: 1001,
+				data: list,
+			};
+			// console.log(_d);
+			ws.send(JSON.stringify(_d));
+		}
 	});
 });
 
@@ -38,4 +48,10 @@ function writeMapJson(data) {
 			console.log(`写入成功`);
 		}
 	});
+}
+
+function getMapList() {
+	let url = path.join("../resource/map");
+	let result = fs.readdirSync(url) || [];
+	return result;
 }

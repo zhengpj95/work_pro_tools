@@ -22,7 +22,12 @@ class BaseSocket extends SingletonClass {
 	}
 
 	public onSocektReceive(): void {
-		console.log(`socket 接受数据 --- `, JSON.parse(this.ws.readUTF()));
+		let data = JSON.parse(this.ws.readUTF());
+		console.log(`socket 接收数据 --- `, data);
+
+		if (data && data['msgId'] && data['msgId'] == 1001) {
+			MessageManager.ins().triggerEventListener(data['msgId'] + '', data);
+		}
 	}
 
 	public onSocketConnect(): void {
