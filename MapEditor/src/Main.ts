@@ -72,6 +72,7 @@ class Main extends eui.UILayer {
 		const userInfo = await platform.getUserInfo();
 		console.log(userInfo);
 
+		BaseSocket.ins().connect();
 	}
 
 	private async loadResource() {
@@ -212,7 +213,5 @@ class Main extends eui.UILayer {
 		panel.horizontalCenter = 0;
 		panel.verticalCenter = 0;
 		this.stage.addChild(panel);
-
-		BaseSocket.ins().connect();
 	}
 }

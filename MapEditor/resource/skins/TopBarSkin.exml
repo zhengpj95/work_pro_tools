@@ -3,6 +3,13 @@
 	height="140" xmlns:e="http://ns.egret.com/eui">
 	<e:Rect left="0" right="0" top="0" bottom="0"/>
 	<e:Label id="lbName" text="地图名字" x="38" y="24"/>
+	<e:List id="listMap" x="39.438" y="14.042" itemRendererSkinName="skins.MapItemSkin">
+		<e:ArrayCollection>
+		<e:Array>
+			<e:Object d=""/>
+		</e:Array>
+		</e:ArrayCollection>
+	</e:List>
 	<e:Button id="btnSave" label="保 存" x="400.29" y="16.585"/>
 	<e:Group x="37.647" y="75.705">
 		<e:ToggleSwitch id="BtnSwitch" label="ToggleButton" x="0" y="2"/>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<e:Skin class="skins.ListViewSkin"
+ xmlns:e="http://ns.egret.com/eui">
+	<e:Image source="border_png" left="0" right="0" top="0" bottom="0"/>
+	<e:Scroller id="scroller" horizontalCenter="0" top="0" bottom="0">
+		<e:List id="mapList" itemRendererSkinName="skins.MapItemSkin">
+			<e:ArrayCollection>
+				<e:Array>
+					<e:Object da=""/>
+					<e:Object da=""/>
+				</e:Array>
+			</e:ArrayCollection>
+		</e:List>
+	</e:Scroller>
+</e:Skin>

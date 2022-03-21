@@ -22,11 +22,12 @@ class MapWin extends eui.UILayer {
 		this.addChild(this.topBarView);
 
 		this.ins = MapProxy.ins();
-		this.addEventListener(egret.Event.ADDED_TO_STAGE, this.startToLoadMap, this);
+		// this.addEventListener(egret.Event.ADDED_TO_STAGE, this.startToLoadMap, this);
 		this.addEventListener('OnHSliderChange', this.onHSliderChange, this);
 		this.addEventListener('OnSwitchToggle', this.onSwitchToggle, this);
 		this.addEventListener('OnMapSave', this.onMapSave, this);
 		this.addEventListener('onClickCheckBox', this.onShowMask, this);
+		MessageManager.ins().addEventListener('postMapList', this.startToLoadMap, this);
 
 		this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
 
@@ -44,6 +45,7 @@ class MapWin extends eui.UILayer {
 	/* 加载地图 */
 	private startToLoadMap(): void {
 		console.log(`start to load map......`);
+		this.sceneMap.removeChildren();
 
 		let mapId = this.ins.mapId;
 		let mapUrl = `resource/map/${mapId}/`;
@@ -67,7 +69,7 @@ class MapWin extends eui.UILayer {
 
 		this.sceneMask.updateMask();
 
-		this.topBarView.loadMapSuccess();
+		// this.topBarView.loadMapSuccess();
 	}
 
 	private onHSliderChange(e: egret.Event): void {

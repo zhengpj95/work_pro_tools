@@ -8,13 +8,22 @@ class TopBarView extends BaseView {
 	public sizeSlider: eui.HSlider;
 	public btnSave: eui.Button;
 	public showMask: eui.CheckBox;
+	public listMap: eui.List;
 	private ins: MapProxy;
+	private mapData: eui.ArrayCollection;
+	private listView: ListView;
 
 	constructor() {
 		super();
 		this.skinName = 'skins.TopBarSkin';
 		this.percentWidth = 100;
+	}
+
+	public initUI(): void {
 		this.ins = MapProxy.ins();
+		this.listMap.dataProvider = this.mapData = new eui.ArrayCollection(['选择地图']);
+		this.listMap.selectedIndex = 0;
+		this.lbName.text = '';
 	}
 
 	open() {
@@ -28,6 +37,23 @@ class TopBarView extends BaseView {
 		this.addEvent(egret.Event.CHANGE, this.BtnSwitch, this.switchToggle);
 		this.addEvent(egret.TouchEvent.TOUCH_TAP, this.btnSave, this.onMapSave);
 		this.addEvent(egret.TouchEvent.TOUCH_TAP, this.showMask, this.onClickCheckBox);
+		this.ins.getMapList();
+		MessageManager.ins().addEventListener('postMapList', this.updateMapList, this);
+		this.addEvent(egret.TouchEvent.TOUCH_TAP, this.listMap, this.onSwitchMap);
+	}
+
+	private onSwitchMap(): void {
+		this.listView = new ListView();
+		if (this.parent && !this.listView.parent) {
+			this.parent.addChild(this.listView);
+		}
+		this.listView.open();
+	}
+
+	private updateMapList(mapId: any): void {
+		let ary = [];
+		ary.push(`当前地图：${mapId}`);
+		this.mapData.replaceAll(ary);
 	}
 
 	initHSlider() {

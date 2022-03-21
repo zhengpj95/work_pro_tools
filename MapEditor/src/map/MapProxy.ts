@@ -28,6 +28,8 @@ class MapProxy extends BaseProxy {
 			return;
 		}
 		this.mapList = msg['data'];
+		this.mapId = +this.mapList[0];
+		MessageManager.ins().triggerEventListener('postMapList', this.mapList[0]);
 	}
 }
 
