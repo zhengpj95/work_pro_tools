@@ -31,12 +31,4 @@ class SceneMap extends egret.Sprite {
 			}
 		}
 	}
-
-	public getSceenScaleX(): number {
-		return 1;//this.getStageWidth() / this.getMapWidth();
-	}
-
-	public getSceenScaleY(): number {
-		return 1;//this.getStageHeigh() / this.getMapHeigh();
-	}
 }
