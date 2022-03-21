@@ -132,6 +132,9 @@ class MapWin extends eui.UILayer {
 	}
 
 	onTouchBegin(e: egret.TouchEvent): void {
+		if (!this.checkPointInMap(e.stageX, e.stageY)) {
+			return;
+		}
 		console.log(`---onTouchBegin---`);
 		this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
 	}
