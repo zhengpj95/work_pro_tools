@@ -1,6 +1,7 @@
 node_modules
 .vscode
 .idea
+.wing
 bin-debug
 MapEditor/libs
 output
