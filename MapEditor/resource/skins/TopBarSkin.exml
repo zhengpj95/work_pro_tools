@@ -1,18 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
 <e:Skin class="skins.TopBarSkin"
-	height="200" xmlns:e="http://ns.egret.com/eui">
+	height="140" xmlns:e="http://ns.egret.com/eui">
 	<e:Rect left="0" right="0" top="0" bottom="0"/>
 	<e:Label id="lbName" text="地图名字" x="38" y="24"/>
-	<e:ToggleSwitch id="BtnSwitch" label="ToggleButton" x="39" y="98"/>
-	<e:Rect id="lbRect" width="30" height="30" x="143" y="96" fillColor="0xFF0000"/>
-	<e:Label text="红色表示障碍点" x="44.284" y="132.637" size="18"/>
-	<e:Group x="279.5" y="73.528">
+	<e:Button id="btnSave" label="保 存" x="400.29" y="16.585"/>
+	<e:Group x="37.647" y="75.705">
+		<e:ToggleSwitch id="BtnSwitch" label="ToggleButton" x="0" y="2"/>
+		<e:Rect id="lbRect" width="30" height="30" x="104" y="0" fillColor="0xFF0000"/>
+		<e:Label text="红色表示障碍点" x="5.28" y="36.64" size="18"/>
+	</e:Group>
+	<e:Group y="26.173" x="540.776">
 		<e:Label id="lbScale" x="8.5" y="0" size="22"/>
 		<e:HSlider id="scaleSlider" width="200" height="20" x="0" y="25"/>
 	</e:Group>
-	<e:Group x="280.029" y="133.589">
+	<e:Group y="86.234" x="540.776">
 		<e:Label id="lbSize" x="8.5" y="0" size="22"/>
 		<e:HSlider id="sizeSlider" width="200" height="20" x="0" y="25"/>
 	</e:Group>
-	<e:Button id="btnSave" label="保 存" x="515" y="20"/>
 </e:Skin>

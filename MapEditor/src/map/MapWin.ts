@@ -32,12 +32,12 @@ class MapWin extends eui.UILayer {
 
 
 		this.sceneMap = new SceneMap();
-		this.sceneMap.y = 200;
+		this.sceneMap.y = 140;
 		this.sceneMap.x = 0;
 		this.addChild(this.sceneMap);
 
 		this.sceneMask = new SceneMask();
-		this.sceneMask.y = 200;
+		this.sceneMask.y = 140;
 		this.sceneMask.x = 0;
 		this.addChild(this.sceneMask);
 	}
@@ -127,7 +127,7 @@ class MapWin extends eui.UILayer {
 	getRealPoint(stageX: number, stageY: number): egret.Point {
 		let point = new egret.Point();
 		point.x = stageX - 10;
-		point.y = stageY - 210;
+		point.y = stageY - 150;
 		return point;
 	}
 
