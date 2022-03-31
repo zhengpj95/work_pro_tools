@@ -21,3 +21,5 @@ MapEditor: 地图编辑器，编辑哪些区域可行走，哪些区域是障碍
 generateResJson: 一键生成 default.res.json 文件
 
 s2t: 皮肤中简体转繁体
+
+checkExml: 检查皮肤中图片资源路径引用外部路径的，去掉width,height等属性值含有小数部分
