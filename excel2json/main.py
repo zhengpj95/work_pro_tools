@@ -55,7 +55,7 @@ def getDataStruct(sheet: worksheet.Worksheet):
 
 
 def getRealData(sheet: worksheet.Worksheet):
-    """ 处理要导出的真实表格数据（多个key的未处理 todo） """
+    """ 处理要导出的真实表格数据 """
     totalKey = getNameList(sheet)['keyNum']  # key数量
     dataStruct = getDataStruct(sheet)
     maxRow = sheet.max_row
@@ -93,7 +93,7 @@ def dealJsonData(sheet: worksheet.Worksheet, obj: dict):
         print('xlsx客户端配置名为空')
         return
 
-    with open(nameList['clientName'], "w", encoding='utf-8') as outfile:
+    with open(outputRoot + nameList['clientName'], "w", encoding='utf-8') as outfile:
         json.dump(obj, outfile, indent=2, ensure_ascii=False)
         # outfile.write(json.dumps(obj, indent=4, ensure_ascii=True))
 
@@ -101,7 +101,7 @@ def dealJsonData(sheet: worksheet.Worksheet, obj: dict):
 def readSingleSheet(sheet: worksheet.Worksheet):
     """ 处理单个sheet """
     nameList = getNameList(sheet)
-    if (not nameList):
+    if (not nameList or (sheet.title[0] == '#')):
         return
     # print(nameList)
     # print(sheet.max_row, sheet.max_column)
@@ -114,7 +114,10 @@ def readSingleSheet(sheet: worksheet.Worksheet):
 if __name__ == '__main__':
     print(sys.argv)
     xlsxUrl = "./test.xlsx"
+    outputRoot = ""
     if sys.argv and len(sys.argv) > 1 and sys.argv[1]:
         xlsxUrl = sys.argv[1]
+    if sys.argv and len(sys.argv) > 1 and sys.argv[2]:
+        outputRoot = sys.argv[2]
     print(xlsxUrl)
     readXlsxFile(xlsxUrl)
