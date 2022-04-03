@@ -209,7 +209,7 @@ class Excel2Json:
             print('xlsx客户端配置名为空')
             return
 
-        with open("output/"+nameList.clientName, "w", encoding='utf-8') as outfile:
+        with open(outputRoot + nameList.clientName, "w", encoding='utf-8') as outfile:
             json.dump(obj, outfile, indent=2, ensure_ascii=False)
             # outfile.write(json.dumps(obj, indent=4, ensure_ascii=True))
 
@@ -217,9 +217,12 @@ class Excel2Json:
 if __name__ == '__main__':
     print(sys.argv)
     xlsxUrl = "./test.xlsx"
+    outputRoot = ""
     if sys.argv and len(sys.argv) > 1 and sys.argv[1]:
         xlsxUrl = sys.argv[1]
-    # print(xlsxUrl)
+    if sys.argv and len(sys.argv) > 1 and sys.argv[2]:
+        outputRoot = sys.argv[2]
 
+        # print(xlsxUrl)
     excel2Json = Excel2Json(xlsxUrl)
     excel2Json.readFile()
