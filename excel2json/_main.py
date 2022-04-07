@@ -1,5 +1,5 @@
 """
-把excel导出json
+把 excel 导出 json | lua
 """
 
 import sys
@@ -7,6 +7,7 @@ from openpyxl import load_workbook
 from openpyxl.worksheet import worksheet
 import json
 import str2list
+import time
 
 
 class SheetStruct:
@@ -201,25 +202,55 @@ class Excel2Json:
                 else:
                     eachRowJson[colStruct._name] = rowData[col]
         self.dealJsonData(totalJson)
+        # todo
+        self.dealLuaData(totalJson)
 
     def dealJsonData(self, obj: dict) -> None:
         """ 导出json数据 """
         nameList = self.sheetStruct
         if not nameList.clientName:
-            print('xlsx客户端配置名为空')
+            print(self.xlslUrl + ' --- 客户端配置名为空 -- 不导出json')
             return
 
-        with open("output/"+nameList.clientName, "w", encoding='utf-8') as outfile:
+        with open(outputRoot + "/" + nameList.clientName, "w", encoding='utf-8') as outfile:
             json.dump(obj, outfile, indent=2, ensure_ascii=False)
             # outfile.write(json.dumps(obj, indent=4, ensure_ascii=True))
+
+    def dealLuaData(self, obj: dict) -> None:
+        """ 导出lua数据 """
+        sStruct = self.sheetStruct
+        if not sStruct.serverName:
+            print(self.xlslUrl + ' --- 服务端配置名为空 -- 不导出lua')
+            return
+        lua_export_file = open(outputRoot + "/" + sStruct.serverName, 'w')
+        lua_export_file.write(
+            "-- {0}\n-- {1}\n".format(self.xlslUrl, sStruct.serverName))
+        lua_export_file.write(
+            "-- %s\n\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+
+        # todo
+        luaStr = "return = {\n"
+        luaStr += "	[1] = {\n"
+        luaStr += "		[1] = {\n"
+        luaStr += "			[\"id\"] = 1001\n"
+        luaStr += "			[\"name\"] = \"zhangsan\"\n"
+        luaStr += "		}\n"
+        luaStr += "	}\n"
+
+        lua_export_file.write(luaStr)
+        lua_export_file.write("\n}")
+        lua_export_file.close()
 
 
 if __name__ == '__main__':
     print(sys.argv)
     xlsxUrl = "./test.xlsx"
+    outputRoot = "./output"
     if sys.argv and len(sys.argv) > 1 and sys.argv[1]:
         xlsxUrl = sys.argv[1]
-    # print(xlsxUrl)
+    if sys.argv and len(sys.argv) > 1 and sys.argv[2]:
+        outputRoot = sys.argv[2]
 
+        # print(xlsxUrl)
     excel2Json = Excel2Json(xlsxUrl)
     excel2Json.readFile()
