@@ -30,7 +30,7 @@ class SheetStruct:
         pass
 
 
-class RowStruct:
+class DataStruct:
     """ 导出数据的结构体信息 """
 
     # 字段名
@@ -106,28 +106,29 @@ class Excel2Json:
             rowData.append(cellValue)
         return rowData
 
-    def getRowStruct(self) -> dict:
+    def getDataStruct(self) -> dict:
         """ 导出数据的结构体信息 """
         row4 = self.getRowValue(self.structRow[0])
         row5 = self.getRowValue(self.structRow[1])
         row6 = self.getRowValue(self.structRow[2])
         row7 = self.getRowValue(self.structRow[3])
-        rowStruct = {}
+        dataStruct = {}
         self.structColLen = len(row5)
         for i in range(0, len(row5)):
-            struct = RowStruct()
+            struct = DataStruct()
             struct._name = row5[i]
             struct._type = row6[i]
             struct._cs = row7[i]
-            rowStruct[i] = struct
-        return rowStruct
+            dataStruct[i] = struct
+        return dataStruct
 
     def dealSingleSheet(self) -> None:
         """ 处理单张sheet """
         if (not self.sheetStruct):
             return
         # print(sheet.max_row, sheet.max_column)
-        print('开始处理sheet:', self.sheet.title)
+        print('开始处理sheet: ', self.sheet.title)
+
         if self.sheetStruct.spcialType:
             self.dealSpecailReachRowData()
         else:
@@ -135,20 +136,20 @@ class Excel2Json:
 
     def dealSpecailReachRowData(self) -> None:
         """ 处理特殊的导出格式，竖状 """
-        rowStruct = self.getRowStruct()
-        if not rowStruct:
+        dataStruct = self.getDataStruct()
+        if not dataStruct:
             return
 
         totalJson = {}
         for row in range(self.startRow, self.sheet.max_row + 1):
-            rowData: RowStruct = self.getRowValue(row)
+            rowData: DataStruct = self.getRowValue(row)
             if len(rowData) == 0 or rowData[0] == None or 'C' not in rowData[2]:
                 break
 
             totalJson[rowData[0]] = eachRowJson = {}
-            col0: RowStruct = rowStruct[0]  # key
+            col0: DataStruct = dataStruct[0]  # key
             eachRowJson[col0._name] = rowData[0]
-            col3: RowStruct = rowStruct[3]  # value
+            col3: DataStruct = dataStruct[3]  # value
 
             if rowData[1] == 'array':
                 eachRowJson[col3._name] = str2list.strToList(rowData[3])
@@ -161,18 +162,18 @@ class Excel2Json:
 
     def dealEachRowData(self) -> None:
         """ 读取每行配置，处理导出数据 """
-        rowStruct = self.getRowStruct()
-        if not rowStruct:
+        dataStruct = self.getDataStruct()
+        if not dataStruct:
             return
 
         # 判断是否有客户端或服务端字段
         haveClient = False
         haveServer = False
-        for idx in range(0, len(rowStruct)):
-            if 'C' in rowStruct[idx]._cs:
+        for idx in range(0, len(dataStruct)):
+            if 'C' in dataStruct[idx]._cs:
                 haveClient = True
                 break
-            if 'S' in rowStruct[idx]._cs:
+            if 'S' in dataStruct[idx]._cs:
                 haveServer = True
                 break
 
@@ -192,21 +193,21 @@ class Excel2Json:
                 eachRowJson = eachRowJson.get(rowData[key])
 
             for col in range(0, self.structColLen):
-                colStruct: RowStruct = rowStruct[col]
+                colStruct: DataStruct = dataStruct[col]
                 if 'C' not in colStruct._cs:
                     continue
                 if colStruct._type == 'array':
-                    eachRowJson[colStruct._name] = str2list.strToList(
-                        rowData[col])
+                    eachRowJson[colStruct._name] = str2list.strToList(rowData[col])
                 elif colStruct._type == 'object':
                     eachRowJson[colStruct._name] = json.loads(rowData[col])
                 else:
                     eachRowJson[colStruct._name] = rowData[col]
+
         if haveClient:
             self.dealJsonData(totalJson)
         else:
             print('\t\t【{0}】不需要导出json'.format(self.sheet.title))
-        # todo
+
         if haveServer:
             self.dealLuaData(totalJson)
         else:
@@ -251,13 +252,16 @@ class Excel2Json:
 
 if __name__ == '__main__':
     print(sys.argv)
+
+    # todo
     xlsxUrl = "./test.xlsx"
     outputRoot = "./output"
+
     if sys.argv and len(sys.argv) > 1 and sys.argv[1]:
         xlsxUrl = sys.argv[1]
     if sys.argv and len(sys.argv) > 1 and sys.argv[2]:
         outputRoot = sys.argv[2]
 
-        # print(xlsxUrl)
+    # print(xlsxUrl, outputRoot)
     excel2Json = Excel2Json(xlsxUrl)
     excel2Json.readFile()
