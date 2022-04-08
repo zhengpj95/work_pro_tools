@@ -165,15 +165,16 @@ class Excel2Json:
         if not rowStruct:
             return
 
-        # 判断是否有客户端字段
+        # 判断是否有客户端或服务端字段
         haveClient = False
+        haveServer = False
         for idx in range(0, len(rowStruct)):
             if 'C' in rowStruct[idx]._cs:
                 haveClient = True
                 break
-        if not haveClient:
-            print('\t\t不需要导出json')
-            return
+            if 'S' in rowStruct[idx]._cs:
+                haveServer = True
+                break
 
         totalKey = self.sheetStruct.keyCount  # 表中配置的key数量
         maxRow = self.sheet.max_row
@@ -201,9 +202,15 @@ class Excel2Json:
                     eachRowJson[colStruct._name] = json.loads(rowData[col])
                 else:
                     eachRowJson[colStruct._name] = rowData[col]
-        self.dealJsonData(totalJson)
+        if haveClient:
+            self.dealJsonData(totalJson)
+        else:
+            print('\t\t【{0}】不需要导出json'.format(self.sheet.title))
         # todo
-        self.dealLuaData(totalJson)
+        if haveServer:
+            self.dealLuaData(totalJson)
+        else:
+            print("\t\t【{0}】不需要导出lua".format(self.sheet.title))
 
     def dealJsonData(self, obj: dict) -> None:
         """ 导出json数据 """
