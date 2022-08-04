@@ -51,7 +51,7 @@ def strToList(lab: str):
 def dealNumberList(array):
     result = []
     for item in array:
-        # print(item)
+        # print(item, item == '')
         if type(item).__name__ == 'list':
             res = dealNumberList(item)
             result.append(res)
@@ -62,7 +62,8 @@ def dealNumberList(array):
                 else:
                     item = int(item)
             if item == '':
-                result.append(None)
+                # 此项为空或者赋值为''
+                result.append('')
             else:
                 # 字符串类型的，如果前后有双引号或单引号，需要去掉
                 if type(item).__name__ == 'str' and ((item[0] == '"' and item[-1] == '"') or (item[0] == "'" and item[-1] == "'")):
