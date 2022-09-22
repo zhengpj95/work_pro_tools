@@ -23,3 +23,5 @@ generateResJson: 一键生成 default.res.json 文件
 s2t: 皮肤中简体转繁体
 
 checkExml: 检查皮肤中图片资源路径引用外部路径的，去掉width,height等属性值含有小数部分
+
+renameImgToPinyin: 把符合条件的图片资源以拼音重命名
