@@ -14,6 +14,17 @@ class MapProxy extends BaseProxy {
 
 	public saveBlocksData(): void {
 		this.send(this.mapData);
+
+		RES.getResByUrl('./resource/config/10001.bin', (data) => {
+			let view: DataView = new DataView(data);
+			console.log(view.getInt32(0, true));
+			console.log(view.getInt32(4, true));
+			console.log(view.getInt32(8, true));
+			console.log(view.getInt32(12, true));
+			console.log(view.getInt32(16, true));
+			console.log(view.getInt32(20, true));
+			console.log(view.getInt32(24, true));
+		}, this, RES.ResourceItem.TYPE_BIN);
 	}
 
 	public getMapList(): void {

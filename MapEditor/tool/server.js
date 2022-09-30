@@ -16,7 +16,19 @@ wss.on("connection", (ws) => {
 
 		if (data && data["path"]) {
 			// console.log(data['path']);
-			writeMapJson(data);
+			// writeMapJson(data);
+			let mapId = +data.path.replace("resource\\map\\", "");
+			let buffer = Buffer.alloc(32);
+			buffer.writeInt32LE(mapId);
+			buffer.writeInt32LE(data.width, 4);
+			buffer.writeInt32LE(data.height, 8);
+			buffer.writeInt32LE(data.sliceWidth, 12);
+			buffer.writeInt32LE(data.sliceHeight, 16);
+			buffer.writeInt32LE(data.cellWidth, 20);
+			buffer.writeInt32LE(data.cellHeight, 24);
+			// fs.writeFile("../resource/config/" + mapId + ".bin", buffer, (err) => {
+			// 	console.log(err);
+			// });
 		}
 
 		if (data && data["msgId"] && data["msgId"] == 1001) {
