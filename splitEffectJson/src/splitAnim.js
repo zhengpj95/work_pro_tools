@@ -1,3 +1,10 @@
+/**
+ * 把特效合图切分
+ *
+ * 两种格式：
+ * 一种是数组格式，[[x,y,w,h,offX,offY,sourceW,sourceH,duration], ...]
+ * 一种是egret的默认Sprite Sheet格式, {"frames": {"1": {x,y,w,w,h,offX,offY,sourceW,sourceH}, "2":{},...}}
+ */
 const path = require("path");
 const fs = require("fs");
 const FileUtil = require("./FileUtil");
@@ -5,7 +12,6 @@ const images = require("images");
 
 let source = "";
 let output = "";
-let prefixFile = "";
 
 const filter = (jsonFile) => {
 	return true;
