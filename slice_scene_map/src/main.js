@@ -13,7 +13,12 @@ let outputRoot = ""; // 地图切块后保存路径
 let obj = {};
 
 function init() {
-	imgData = images(path.join(__dirname, "..", "resource", `${mapId}.jpg`));
+	let sourceRoot = path.join(__dirname, "..", "resource", `${mapId}.jpg`);
+	imgData = images(sourceRoot);
+	if (!imgData) {
+		console.log(`错误：没有此地图 ${sourceRoot}`);
+		return;
+	}
 	outputRoot = path.join(__dirname, "..", "output", `${mapId}`);
 
 	if (!fs.existsSync(outputRoot)) {
@@ -78,6 +83,8 @@ function saveInfoJson() {
 }
 
 function main() {
+	console.log(`\n=============== 开始切图 ${mapId} ===============\n`);
+
 	init();
 	sliceMap();
 	saveMiniImg();
@@ -86,7 +93,17 @@ function main() {
 
 if (process.argv.length > 2) {
 	let argv = process.argv.splice(2);
-	// todo 处理bat拖入的地图原图
+	let imgSource = argv[0];
+	let imgBasename = path.basename(imgSource);
+	fs.copyFile(imgSource, path.join(__dirname, '../resource', imgBasename), (err) => {
+		if (err) {
+			console.log(`复制图片 ${path.join('../resource', imgBasename)} 错误`);
+			return;
+		}
+		console.log(`复制图片 ${path.join('../resource', imgBasename)} 成功`);
+		mapId = imgBasename.replace(path.extname(imgSource), '');
+		main();
+	});
 } else {
 	mapId = 1001;
 	main();
