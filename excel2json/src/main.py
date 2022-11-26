@@ -244,7 +244,6 @@ class Excel2Json:
 
 		# lua说明
         urlList = self.xlslUrl.split(os.sep) # 获取路径中的xlsx文件名
-        print(urlList)
         luaStr = "-- {0}\n-- {1}\n".format(urlList[-1], nameList.serverName)
         luaStr += "-- %s\n\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         luaStr += "return"

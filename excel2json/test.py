@@ -2,7 +2,7 @@ import sys
 from openpyxl import load_workbook
 from openpyxl.worksheet import worksheet
 import json
-import str2list
+import src.str2list as str2list
 
 
 def readXlsxFile(xlsxUrl):
