@@ -8,7 +8,8 @@ from openpyxl.worksheet import worksheet
 import json
 import str2list
 import time
-
+import json2lua
+import os
 
 class SheetStruct:
     """ 表的导出信息 """
@@ -170,46 +171,56 @@ class Excel2Json:
         haveClient = False
         haveServer = False
         for idx in range(0, len(dataStruct)):
-            if 'C' in dataStruct[idx]._cs:
+            if haveClient == True and haveServer == True:
+                break
+            if 'C' in dataStruct[idx]._cs and haveClient == False:
                 haveClient = True
-                break
-            if 'S' in dataStruct[idx]._cs:
+            if 'S' in dataStruct[idx]._cs and haveServer == False:
                 haveServer = True
-                break
 
         totalKey = self.sheetStruct.keyCount  # 表中配置的key数量
         maxRow = self.sheet.max_row
 
         totalJson = {}
+        luaJson = {} # 先生成临时json，再转化为lua
         for row in range(self.startRow, maxRow+1):
             rowData = self.getRowValue(row)
             if len(rowData) == 0 or rowData[0] == None:
                 break
 
             eachRowJson = totalJson
+            eachLuaJson = luaJson
             for key in range(0, totalKey):
                 if not eachRowJson.get(rowData[key]):
                     eachRowJson[rowData[key]] = {}
+                    eachLuaJson[rowData[key]] = {}
                 eachRowJson = eachRowJson.get(rowData[key])
+                eachLuaJson = eachLuaJson.get(rowData[key])
 
             for col in range(0, self.structColLen):
                 colStruct: DataStruct = dataStruct[col]
-                if 'C' not in colStruct._cs:
-                    continue
-                if colStruct._type == 'array':
-                    eachRowJson[colStruct._name] = str2list.strToList(rowData[col])
-                elif colStruct._type == 'object':
-                    eachRowJson[colStruct._name] = json.loads(rowData[col])
-                else:
-                    eachRowJson[colStruct._name] = rowData[col]
-
+                if 'C' in colStruct._cs:
+                    if colStruct._type == 'array':
+                        eachRowJson[colStruct._name] = str2list.strToList(rowData[col])
+                    elif colStruct._type == 'object':
+                        eachRowJson[colStruct._name] = json.loads(rowData[col])
+                    else:
+                        eachRowJson[colStruct._name] = rowData[col]
+                if 'S' in colStruct._cs:
+                    if colStruct._type == 'array':
+                        eachLuaJson[colStruct._name] = str2list.strToList(rowData[col])
+                    elif colStruct._type == 'object':
+                        eachLuaJson[colStruct._name] = json.loads(rowData[col])
+                    else:
+                        eachLuaJson[colStruct._name] = rowData[col]
+        
         if haveClient:
             self.dealJsonData(totalJson)
         else:
             print('\t\t【{0}】不需要导出json'.format(self.sheet.title))
 
         if haveServer:
-            self.dealLuaData(totalJson)
+            self.dealLuaData(luaJson)
         else:
             print("\t\t【{0}】不需要导出lua".format(self.sheet.title))
 
@@ -226,28 +237,21 @@ class Excel2Json:
 
     def dealLuaData(self, obj: dict) -> None:
         """ 导出lua数据 """
-        sStruct = self.sheetStruct
-        if not sStruct.serverName:
+        nameList = self.sheetStruct
+        if not nameList.serverName:
             print(self.xlslUrl + ' --- 服务端配置名为空 -- 不导出lua')
             return
-        lua_export_file = open(outputRoot + "/" + sStruct.serverName, 'w')
-        lua_export_file.write(
-            "-- {0}\n-- {1}\n".format(self.xlslUrl, sStruct.serverName))
-        lua_export_file.write(
-            "-- %s\n\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 
-        # todo
-        luaStr = "return = {\n"
-        luaStr += "	[1] = {\n"
-        luaStr += "		[1] = {\n"
-        luaStr += "			[\"id\"] = 1001\n"
-        luaStr += "			[\"name\"] = \"zhangsan\"\n"
-        luaStr += "		}\n"
-        luaStr += "	}\n"
-
-        lua_export_file.write(luaStr)
-        lua_export_file.write("\n}")
-        lua_export_file.close()
+		# lua说明
+        urlList = self.xlslUrl.split(os.sep) # 获取路径中的xlsx文件名
+        print(urlList)
+        luaStr = "-- {0}\n-- {1}\n".format(urlList[-1], nameList.serverName)
+        luaStr += "-- %s\n\n" % time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        luaStr += "return"
+		# json转化为lua
+        wf = open(outputRoot + "/" + nameList.serverName, 'w', 1, 'utf-8')
+        wf.write(luaStr + json2lua.dic_to_lua_str(obj))
+        wf.close()
 
 
 if __name__ == '__main__':

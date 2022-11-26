@@ -63,10 +63,10 @@ def dic_to_lua_str(data, layer=0):
         return None
 
 
-f = open('./output/LangConfig.json', 'rb')
-json_dic = f.read()
-f.close()
+# f = open('./output/LangConfig.json', 'rb')
+# json_dic = f.read()
+# f.close()
 
-wf = open('./output/LangConfig.lua', 'w', 1, 'utf-8')
-wf.write('return' + dic_to_lua_str(json.loads(json_dic)))
-wf.close()
+# wf = open('./output/LangConfig.lua', 'w', 1, 'utf-8')
+# wf.write('return' + dic_to_lua_str(json.loads(json_dic)))
+# wf.close()
