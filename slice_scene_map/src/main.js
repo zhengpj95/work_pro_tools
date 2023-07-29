@@ -2,12 +2,15 @@ const fs = require("fs");
 const path = require("path");
 const images = require("images");
 
-let mapId = 1001; //地图id
-let eachWidth = 256;
-let eachHeight = 256;
-let cellWidth = 32;
-let cellHeight = 32;
+/**地图切块格式*/
+const MapData = {
+	TileWidth: 256,
+	TileHeight: 256,
+	CellWidth: 32,
+	CellHeight: 32,
+};
 
+let mapId = 1001; //地图id
 let imgData = null; // 原图images
 let outputRoot = ""; // 地图切块后保存路径
 let obj = {};
@@ -28,10 +31,10 @@ function init() {
 	obj.path = path.normalize(path.join("resource", "map", `${mapId}`));
 	obj.width = imgData.width();
 	obj.height = imgData.height();
-	obj.sliceWidth = eachWidth;
-	obj.sliceHeight = eachHeight;
-	obj.cellWidth = cellWidth;
-	obj.cellHeight = cellHeight;
+	obj.sliceWidth = MapData.TileWidth;
+	obj.sliceHeight = MapData.TileHeight;
+	obj.cellWidth = MapData.CellWidth;
+	obj.cellHeight = MapData.CellHeight;
 	obj.blocks = [];
 
 	for (let i = 0; i < Math.floor(obj.height / obj.cellHeight); i++) {
@@ -43,13 +46,13 @@ function init() {
 
 // 地图切片
 function sliceMap() {
-	let cols = Math.floor(imgData.width() / eachHeight);
-	let rows = Math.floor(imgData.height() / eachHeight);
+	let cols = Math.floor(imgData.width() / MapData.TileHeight);
+	let rows = Math.floor(imgData.height() / MapData.TileHeight);
 	for (let i = 0; i < rows; i++) {
 		for (let j = 0; j < cols; j++) {
-			let x = j * eachWidth;
-			let y = i * eachHeight;
-			let img = images(eachWidth, eachHeight).copyFromImage(imgData, x, y, eachWidth, eachHeight);
+			let x = j * MapData.TileWidth;
+			let y = i * MapData.TileHeight;
+			let img = images(MapData.TileWidth, MapData.TileHeight).copyFromImage(imgData, x, y, MapData.TileWidth, MapData.TileHeight);
 			img.saveAsync(path.join(outputRoot, `${i}_${j}.jpg`), "jpg", (err) => {
 				if (err) {
 					console.log(`创建 ${i}_${j}.jpg 失败`);
@@ -61,7 +64,7 @@ function sliceMap() {
 
 // 小地图
 function saveMiniImg() {
-	imgData.resize(eachWidth, eachHeight);
+	imgData.resize(MapData.TileWidth, MapData.TileHeight);
 	imgData.saveAsync(path.join(outputRoot, "mini.jpg"), "jpg", (err) => {
 		if (err) {
 			console.log(`创建 mini.jpg 失败`);
