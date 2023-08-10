@@ -2,10 +2,16 @@ const images = require("images");
 const path = require("path");
 const fs = require("fs");
 
+/**切块方式 1表示横切，2表示竖切*/
+const SLICETYPE = {
+	ROW: 1,
+	COL: 2
+}
+
 /** 地图id */
 const mapId = "1193";
 /** 切块方式： 1表示横切，2表示竖切 */
-const sliceType = 1;
+const sliceType = SLICETYPE.ROW;
 
 /**
  * 读取目录下所有的资源
@@ -81,7 +87,7 @@ function main() {
 	let [num1, num2] = getMaxRowAndCol();
 
 	let totalRow = (totalCol = 0);
-	if (sliceType == 1) {
+	if (sliceType == SLICETYPE.ROW) {
 		totalRow = num1;
 		totalCol = num2;
 	} else {
@@ -95,7 +101,7 @@ function main() {
 	let img = images(mapWidth, mapHeight);
 	for (let row = 0; row < totalRow; row++) {
 		for (let col = 0; col < totalCol; col++) {
-			let sliceImg = sliceType == 1 ? `${row}_${col}` : `${col}_${row}`;
+			let sliceImg = sliceType == SLICETYPE.ROW ? `${row}_${col}` : `${col}_${row}`;
 			let sourceImg = images(path.join(__dirname, `../source/${mapId}/${sliceImg}.jpg`));
 			if (!sourceImg) {
 				continue;
