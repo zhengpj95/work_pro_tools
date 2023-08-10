@@ -2,7 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const FileUtil = require("../libs/FileUtil");
 const Root = path.join("D:\\project\\p1_client\\trunk\\");
-const resPrj = path.join(__dirname, "../sources/default.res.json");
+//default.res.json文件，根据这个重新命名，若是存在重名的，则后面数字叠加 todo
+const resPrj = path.join(Root, "../sources/default.res.json");
 
 const regExp = /[0-9]*$/;
 

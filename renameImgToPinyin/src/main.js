@@ -5,8 +5,8 @@ const FileUtil = require("../libs/FileUtil");
 const pinyin = require("pinyin");
 const images = require("images");
 
-let specialDirName = "renameoutput";
-let UIRoot = path.join(__dirname, "../sources/A-共用");
+let specialDirName = "renameoutput";//导出的文件夹名称
+let UIRoot = path.join(__dirname, "../sources/A-共用");// todo 测试路径
 let resMap = readJson.readResJson();
 
 // 文件原名路径: 文件拼音命名路径
@@ -103,7 +103,7 @@ function moveImgs() {
 
 if (process.argv.length > 2) {
 	let argv = process.argv.splice(2);
-	UIRoot = argv[0];
+	UIRoot = argv[0]; //重新赋值
 	let basename = path.basename(UIRoot);
 	FileUtil.cleanDirSync(path.join(UIRoot, specialDirName)); //清除上一次重命名导出的文件夹内容
 	renameToPinYin();
