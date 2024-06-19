@@ -1,0 +1,25 @@
+{
+  "name": "work_pro_tools",
+  "version": "1.0.0",
+  "description": "记录工作中自己写的一些工具，或者经常用到的工具",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhengpj95/work_pro_tools.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhengpj95/work_pro_tools/issues"
+  },
+  "homepage": "https://github.com/zhengpj95/work_pro_tools#readme",
+  "dependencies": {
+    "images": "^3.2.4",
+    "pinyin": "^4.0.0-alpha.0",
+    "yamljs": "^0.3.0"
+  }
+}
