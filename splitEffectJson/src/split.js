@@ -6,11 +6,9 @@ const path = require("path");
 const fs = require("fs");
 const images = require("images");
 
-let mcName = "scenePlayer_1";
-
-let jsonData = fs.readFileSync(path.join(__dirname, `../effect_source/${mcName}.json`), "utf-8");
-jsonData = JSON.parse(jsonData);
-let pngSource = images(path.join(__dirname, `../effect_source/${mcName}.png`));
+let mcName = null; // 图集名称
+let jsonData = null; // 图集json数据
+let pngSource = null; // 图集png数据
 
 function dealLabels() {
 	let labels = jsonData["mc"][mcName]["labels"];
@@ -45,13 +43,9 @@ function dealRes(name, idx, frame) {
 	if (!frame) {
 		return;
 	}
-	let output = path.join(__dirname, "../output/", mcName);
+	let output = path.join(__dirname, "../output/", mcName, name);
 	if (!fs.existsSync(output)) {
-		fs.mkdirSync(output);
-	}
-	output = path.join(output, name);
-	if (!fs.existsSync(output)) {
-		fs.mkdirSync(output);
+		fs.mkdirSync(output, { recursive: true });
 	}
 
 	let res = jsonData["res"][`${frame["res"]}`];
@@ -66,6 +60,15 @@ function dealRes(name, idx, frame) {
 		.save(path.join(output, `${name}_${idx}.png`));
 }
 
+function main() {
+	mcName = "scenePlayer_0_attack";
+
+	jsonData = JSON.parse(fs.readFileSync(path.join(__dirname, `../effect_source/${mcName}.json`), "utf-8"));
+	pngSource = images(path.join(__dirname, `../effect_source/${mcName}.png`));
+
+	dealLabels();
+}
+
 console.log(`\n=============== 开始处理 ${mcName} ===============\n`);
-dealLabels();
+main();
 console.log(`\n=============== 结束处理 ${mcName} ===============\n`);
