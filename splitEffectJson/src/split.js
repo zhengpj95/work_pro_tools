@@ -20,6 +20,7 @@ function dealLabels() {
 	}
 
 	for (let lb of labels) {
+		console.log(`开始切割：`, lb["name"]);
 		dealFrames(lb);
 	}
 }
@@ -65,4 +66,6 @@ function dealRes(name, idx, frame) {
 		.save(path.join(output, `${name}_${idx}.png`));
 }
 
+console.log(`\n=============== 开始处理 ${mcName} ===============\n`);
 dealLabels();
+console.log(`\n=============== 结束处理 ${mcName} ===============\n`);
